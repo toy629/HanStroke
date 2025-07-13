@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>繁體中文筆順練習</title>
+  <script src="hanzi-writer.min.js"></script>
+  <link rel="preload" href="fonts/BpmfIansui-Regular.ttf" as="font" type="font/ttf" crossorigin>
+  <style>
+    .page-description {
+    /* 讓文字置中對齊 */
+    text-align: center;
+    
+    /* 設定適合深色背景的文字顏色 */
+    color: #ECEFF1;
+
+    /* 設定與下方按鈕的間距 */
+    margin-bottom: 25px;
+
+    /* 其他可選樣式 */
+    font-size: 1em;
+    font-weight: normal;
+    max-width: 500px; /* 避免在寬螢幕上文字行過長 */
+    margin-left: auto;   /* 搭配 max-width 實現置中 */
+    margin-right: auto;  /* 搭配 max-width 實現置中 */
+    line-height: 1;    /* 增加行高，讓文字更好閱讀 */
+    }
+
+    /* --- 全域設定 --- */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+/* ✨ 新增：強制所有按鈕和輸入框繼承字體 */
+    button,
+    input,
+    select,
+    textarea {
+      font-family: inherit; /* 關鍵！讓這些元素繼承父層的字體設定 */
+    }
+
+    body {
+      font-family: 'MyGlobalFont', "PingFang TC", "Microsoft JhengHei", sans-serif;
+      /* ... 您其他的 body 樣式 ... */
+    }
+    body{
+      font-family:'FangYun','Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      margin:0;
+      color:#333;
+      font-weight:600;
+      background-color: #f4f4f4; /* 為頁面之間設定一個統一的底色 */
+    }
+    
+    /* --- 首頁區塊樣式 --- */
+    #home-page {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+      background-image: url('images/homepage.webp'); 
+      background-size: cover; 
+      background-position: center; 
+      background-repeat: no-repeat; 
+    }
+
+    #home-page h1 {
+      font-size: 3em;
+      color: #5D4037;
+      text-shadow: 0px 2px 4px rgba(255, 255, 255, 0.5);
+      margin: 10px 0;
+      font-weight: 700;
+    }
+
+    #home-page .start-button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 15px 40px;
+      font-size: 1.2em;
+      font-weight: 600;
+      color: white;
+      background-color: #A1887F;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    #home-page .start-button:hover {
+      background-color: #8D6E63;
+      transform: translateY(-2px);
+    }
+
+    /* --- 筆順練習區塊樣式 --- */
+    #practice-page {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      padding:10px 80px 40px 10px; /* 增加底部 padding */
+      box-sizing: border-box;
+      min-height: 100vh;
+      position: relative;
+      background-color: #fff8eb; /* 使用純白背景 */
+    }
+
+    /* --- 新增：學習進度頁面樣式 --- */
+    /* --- 學習進度頁面樣式 --- */
+    #progress-page {
+        display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 40px 20px; box-sizing: border-box; background: linear-gradient(135deg, #fff8eb 0%, #fef9ed 100%);
+    }
+    /* ✨ 以下是實現左右佈局的關鍵 CSS ✨ */
+    .progress-main-layout {
+        display: flex; flex-direction: row; align-items: flex-start; gap: 30px; width: 100%; max-width: 900px; margin-bottom: 30px;
+    }
+    .progress-left-column {
+        flex: 1; display: flex; flex-direction: column; gap: 0px;
+    }
+    .progress-right-column {
+        flex: 1; display: flex; align-items: flex-start;
+    }
+    /* 在小螢幕上變回垂直排列 */
+    @media (max-width: 768px) {
+      .progress-main-layout {
+        flex-direction: column;
+      }
+    }
+
+    .progress-container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        width: 90%;
+        max-width: 600px;
+        margin-bottom: 10px;
+    }
+
+    .progress-container h2 {
+        font-size: 1.8em;
+        color: #00695c;
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    #progress-char-count-display {
+        font-size: 4em;
+        font-weight: 700;
+        color: #FFD700; /* 金色 */
+        line-height: 1;
+    }
+    
+    #progress-char-count-display .star-icon {
+        font-size: 0.8em; /* 星星比數字小一點 */
+        vertical-align: super;
+        margin-right: 5px;
+    }
+
+    #progress-levels-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .progress-level-item {
+        background-color: #28a745;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 1.1em;
+        font-weight: 600;
+    }
+    
+    .progress-level-placeholder {
+        color: #888;
+        font-style: italic;
+    }
+    /* 新增：右側獎勵圖片容器樣式 */
+    #progress-reward-image-container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        text-align: center;
+        width: 100%;
+        aspect-ratio: 1 / 1
+    }
+
+/* ✨ 新增：控制成就圖片的大小和樣式 */
+    #progress-reward-image-container img {
+        width: 100%; /* 寬度填滿其白色容器 */
+        max-width: 100%;
+        max-height: 250px; /* 設定一個最大高度，您可以自行調整這個數字 */
+        object-fit: cover; /* 確保圖片在限制尺寸內能完整顯示，不變形 */
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+
+    #progress-reward-image-container h3 {
+        font-size: 1.4em;
+        color: #BF360C;
+        margin: 0 0 5px 0;
+    }
+
+    #progress-reward-image-container p {
+        color: #555;
+        margin: 0;
+    }
+    .back-button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 25px;
+      font-size: 1em;
+      font-weight: 600;
+      color: #333;
+      background-color: #e0e0e0;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    .back-button:hover {
+      background-color: #bdbdbd;
+    }
+
+
+    /* 新增：前往進度頁面的按鈕樣式 */
+    .progress-link-button {
+        display: inline-block;
+        margin-top: 20px;
+        background-color: #f9a898;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+    }
+    .progress-link-button:hover {
+        background-color: #f9a898;
+    }
+
+/* ✨ 1. 新增：定義您的「全域字體」 */
+    @font-face {
+      font-family: 'FangYun'; /* 為您的全域字體取一個獨特的名字 */
+      src: url('fonts/jf-openhuninn-2.1.ttf') format('truetype'); /* 指向您的字體檔案 */
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    /* --- 以下為原有的其他 CSS (已整合) --- */
+    @font-face {
+      font-family: 'CoriandrumCustom';
+      src: url('fonts/BpmfIansui-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    #practice-page h1{
+      color:#Fa9782;
+      margin-bottom:15px;
+      font-weight:700;
+      font-size: 1.8em;
+    }
+    .subtitle{
+      font-size:1em;
+      color:#555;
+      margin-bottom:10px;
+      font-weight:normal
+    }
+    #input-mode-selector{
+      margin-bottom:15px;
+      display:flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap:10px
+    }
+    .mode-button {
+      font-size:15px;
+      padding:8px 15px;
+      border:1px solid #76d7c4;
+      background-color:#fff;
+      color:#76d7c4;
+      border-radius:6px;
+      cursor:pointer;
+      transition:background-color .3s ease,color .3s ease;
+      font-weight:600
+    }
+    .mode-button.active, .mode-button:hover {
+      background-color:#76d7c4;
+      color:#fff
+    }
+    #input-container {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      margin-bottom:15px;
+      gap:10px;
+      width:95%;
+      max-width:400px;
+    }
+    #level-selection-container {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      margin-bottom:15px;
+      gap:10px;
+      width:80%;
+      max-width: 500px;
+    }
+
+    #level-buttons-area {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 4px;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 80%;
+        padding: 0px;
+        box-sizing: border-box;
+    }
+
+    .level-select-btn {
+        padding: 4px 5px;
+        background-color: #82E0AA;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        width: auto;
+        min-width: 10px;
+        flex-shrink: 1;
+        flex-grow: 1;
+        white-space: nowrap;
+        transition: background-color .3s ease;
+    }
+
+    #text-input-area,
+    #file-input-area{
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px
+    }
+    #text-input{
+      font-size:16px;
+      padding:10px;
+      width:100%;
+      box-sizing: border-box;
+      text-align:center;
+      border:1px solid #ddd;
+      border-radius:6px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease; /* 讓點選時的變化更平順 */
+
+      /* --- ✨ 顏色修改區 --- */
+      background-color: #FAF8F5;   /* 1. 修改：輸入框的背景色 (米白色) */
+      color: #5D4037;              /* 2. 修改：使用者輸入的文字顏色 (深棕色) */
+      border: 1px solid #D7CCC8;   /* 3. 修改：輸入框的邊框顏色 (淺棕色) */
+      box-shadow: inset 0 1px 3px rgba(0,0,0,.05);
+    }
+
+    /* ✨ 4. 新增：修改提示文字的顏色 */
+    #text-input::placeholder {
+      color: #A1887F; /* 提示文字使用中等棕色 */
+    }
+
+    /* ✨ 5. 新增：修改點選輸入框時的外觀 */
+    #text-input:focus {
+      outline: none; /* 移除瀏覽器預設的藍色外框 */
+      border-color: #A1887F; /* 邊框變為較深的顏色 */
+      box-shadow: 0 0 0 3px rgba(161, 136, 127, 0.2); /* 加上柔和的發光效果 */
+    }
+    
+    #file-input{display:none}
+    .file-input-label{
+      font-size:16px;
+      padding:10px 15px;
+      background-color:#fff;
+      color:#76d7c4;
+      border:1px dashed #76d7c4;
+      border-radius:6px;
+      cursor:pointer;
+      transition:background-color .3s ease,color .3s ease;
+      width:100%;
+      box-sizing:border-box;
+      font-weight:600
+    }
+    .file-input-label:hover{background-color:#e0f7fa}
+    #selected-file-name{
+      font-size:.9em;
+      color:#555;
+      margin-top:5px;
+      word-break:break-all;
+      font-weight:normal
+    }
+    #process-data-button{
+      font-size:17px;
+      padding:10px 20px;
+      background-color:#76d7c4;
+      color:#fff;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      transition:background-color .3s ease;
+      width:100%;
+      box-sizing:border-box;
+      font-weight:600
+    }
+    #process-data-button:hover{background-color:#65bcaa}
+    #character-selection-buttons-container{
+      width:95%;
+      max-width:600px;
+      margin-bottom:15px
+    }
+    #character-selection-buttons{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:8px
+    }
+    .char-select-button{
+      padding:8px 12px;
+      background-color:#ffdab9;
+      color:#333;
+      border:1px solid #ffcfaa;
+      border-radius:6px;
+      cursor:pointer;
+      transition:background-color .2s ease,color .2s ease,border-color .2s ease;
+      font-family:'CoriandrumCustom','芫荽體',sans-serif;
+      font-size:1.5em;
+      font-weight:normal;
+      line-height:1.3;
+      min-width:50px
+    }
+    .char-select-button:hover{background-color:#ffc8a2;border-color:#ffb77e}
+    .char-select-button.active{
+      background-color:#ffc8a2;
+      color:#333;
+      border-color:#ffb77e;
+      box-shadow:0 0 0 2px #ffb77e inset
+    }
+
+    #practice-mode-selector {
+      margin-bottom: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      width: 95%;
+      max-width: 400px;
+    }
+    .practice-mode-button {
+      font-size: 15px;padding: 8px 15px;border: 1px solid #C78482;background-color: #fff;color: #Fa9782;border-radius: 6px;cursor: pointer;transition: background-color 0.3s ease, color 0.3s ease;font-weight: 600;
+    }
+    .practice-mode-button.active,
+    .practice-mode-button:hover {
+      background-color: #Fa9782;color: white;
+    }
+
+    .display-area-container{
+      display:flex;
+      flex-direction: column;
+      align-items: center;
+      gap:10px;
+      width:95%;
+      max-width: 580px;
+      margin-bottom:0px;
+    }
+    #animation-wrapper{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      width:100%;
+      max-width: 200px;
+    }
+    #quiz-area-wrapper{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      width:100%;
+      max-width: 350px;
+    }
+
+    .hanzi-box{
+      background-color:#fff;
+      border:1px solid #ddd;
+      border-radius:8px;
+      box-shadow:0 2px 6px rgba(0,0,0,.08);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+      box-sizing: border-box;
+    }
+    #animation-display.hanzi-box{
+      width: 150px;
+      height: 150px;
+    }
+    #quiz-display.hanzi-box{
+      width: 280px;
+      height: 280px;
+      touch-action:none;
+      position: relative;
+      margin: 0 auto;
+    }
+
+    #replay-animation-button,
+    #hint-next-stroke-button {
+      padding: 6px 10px;
+      font-size: 0.9em;
+      font-size:14px;background-color:#76d7c4;color:#fff;border:none;border-radius:4px;cursor:pointer;transition:background-color .3s ease;font-weight:600
+    }
+    #replay-animation-button:hover{background-color:#65bcaa}
+    #replay-animation-button:disabled{background-color:#b0bec5;color:#78909c;cursor:not-allowed}
+
+    #quiz-controls {
+      margin-top: 0px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #hint-next-stroke-button {
+      background-color: #ffdab9;color: #333;display: none;
+    }
+    #hint-next-stroke-button:hover {background-color: #ffdab9;}
+    #hint-next-stroke-button:disabled { background-color: #E0E0E0; color: #A0A0A0; cursor: not-allowed; opacity: 0.7; }
+
+    #practiced-characters-container{
+      margin-top:5px;padding:15px;width:95%;max-width:600px;background-color:#fdfdfd;border:1px solid #eee;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,.05)
+    }
+    #practiced-characters-container h2{
+      color:#00695c;font-size:1.3em;margin-top:0;margin-bottom:10px;font-weight:700
+    }
+    #practiced-characters-list{
+      display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-weight:normal;min-height:2em
+    }
+    .practiced-char-item{
+      background-color:#e0f2f1;color:#00796b;padding:5px 10px;border-radius:4px;font-size:1.1em
+    }
+    
+    #congrats-overlay{
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      display: none;
+      z-index: 1000;
+      pointer-events: auto;
+      background-color: rgba(255, 255, 255, 0.9);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    #congrats-overlay .congrats-image {
+      max-width: 80%;
+      max-height: 60vh;
+      width: 300px;
+      margin-top: 20px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+    #congrats-overlay h2 {
+      color:#C78B8D;
+      font-size: 2.2em;
+      font-weight: bold;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+      margin: 0;
+      padding: 0 20px;
+    }
+
+    #music-controls {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    #play-pause-music-button {
+        font-size: 14px;
+        padding: 8px 15px;
+        background-color: #76D7C4;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, opacity 0.3s ease;
+        font-weight: 600;
+        min-width: 120px;
+    }
+    #play-pause-music-button:hover {
+        background-color: #65BCAA;
+    }
+    #play-pause-music-button:disabled {
+      background-color: #B0BEC5;
+      color: #78909C;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    #reward-display-container {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 100px;
+      z-index: 20;
+      transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+      pointer-events: auto;
+      display: none;
+    }
+    #reward-display-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    #star-count-display {
+      display: none;
+    }
+
+    #auth-ui {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1001;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 5px;
+        padding: 5px;
+        border-radius: 8px;
+        max-width: 45%; 
+        box-sizing: border-box;
+    }
+
+    #auth-ui button {
+        font-size: 13px;
+        padding: 6px 10px;
+        margin: 0;
+        width: fit-content;
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    #user-status {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 0.9em;
+        color: #444;
+        margin: 0;
+        white-space: nowrap;
+        font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+
+    #user-status img {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        vertical-align: middle;
+        margin-right: 3px;
+        flex-shrink: 0;
+    }
+
+    @media (min-width: 601px) {
+      .display-area-container {
+        flex-direction: row;
+        align-items: flex-start;
+        max-width: 580px;
+      }
+      #animation-wrapper, #quiz-area-wrapper { width: auto; max-width: none; }
+      #animation-display.hanzi-box { width: 180px; height: 180px; }
+      #quiz-display.hanzi-box { width: 350px; height: 350px; }
+      #reward-display-container { width: 120px; }
+    }
+
+    @media (max-width: 600px) {
+        #practice-page {
+            padding: 50px 5px 10px 5px; 
+        }
+        #auth-ui {
+            top: 5px;
+            right: 5px;
+            max-width: auto;
+            width: fit-content;
+            align-items: flex-end;
+        }
+
+        #auth-ui button {
+            font-size: 12px;
+            padding: 5px 8px;
+        }
+
+        #user-status {
+            font-size: 0.8em;
+        }
+
+        #practice-page h1 {
+            margin-top: 0px;
+            padding-top: 10px;
+        }
+/* --- ✨ 新增：左右兩欄佈局的樣式 --- */
+        .progress-main-layout {
+            display: flex; /* 啟用 Flexbox 佈局 */
+            flex-direction: row; /* 設定主軸方向為水平（左右並排） */
+            align-items: flex-start; /* 讓左右欄頂部對齊 */
+            gap: 30px; /* 左右欄之間的間距 */
+            width: 100%;
+            max-width: 900px; /* 設定整個佈局的最大寬度 */
+            margin-bottom: 30px;
+        }
+
+        .progress-left-column {
+            flex: 1; /* 讓左欄自動分配可用空間 */
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .progress-right-column {
+            flex: 1; /* 讓右欄自動分配可用空間 */
+            display: flex;
+            align-items: flex-start; /* 讓內容從頂部開始 */
+        }
+
+        /* 針對手機等小螢幕的優化 */
+        @media (max-width: 768px) {
+          .progress-main-layout {
+            flex-direction: column; /* 在小螢幕上，改回垂直堆疊，避免擠壓 */
+          }
+        }    
+    }
+        /* --- 新增：三層關卡選擇介面樣式 --- */
+        .level-tier-container {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .level-selection-column {
+            flex: 1;
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            min-width: 150px;
+        }
+
+        .level-selection-title {
+            margin: 0 0 10px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #76d7c4;
+            color: #00695c;
+            font-size: 1.1em;
+        }
+
+        .level-buttons-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .tier-button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .tier-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .tier-button.active {
+            background-color: #76d7c4;
+            color: white;
+            border-color: #76d7c4;
+        }
+
+        #reset-level-selection-button {
+            font-size: 14px;
+            padding: 8px 15px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* 小螢幕上改為垂直排列 */
+        @media (max-width: 600px) {
+          .level-tier-container {
+            flex-direction: column;
+          }
+        }    
+        /* --- ✨ 2. 新增：外部連結頁面樣式 --- */
+        #links-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh; /* 不需要佔滿全螢幕，感覺更像頁尾 */
+            padding: 60px 20px;
+            box-sizing: border-box;
+            background-color: #ab9187; 
+            color: #CFD8DC;
+        }
+
+        #links-page h2 {
+            font-size: 2em;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .links-page-content {
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        #links-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 響應式網格佈局 */
+            gap: 20px; /* 卡片間距 */
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: #89746c;
+            padding: 20px;
+            border-radius: 8px;
+            color: #ECEFF1;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .link-card-icon {
+            font-size: 2em;
+            flex-shrink: 0;
+        }
+
+        .link-card-text h4 {
+            margin: 0 0 5px 0;
+            color: white;
+            font-size: 1.1em;
+        }
+
+        .link-card-text p {
+            margin: 0;
+            font-size: 0.9em;
+            font-weight: normal;
+            opacity: 0.8;
+        }
+        /* --- ✨ 2. 新增：頁尾社群連結樣式 --- */
+        #social-links-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px; /* 圖示之間的間距 */
+            margin-top: 30px; /* 與上方按鈕的間距 */
+        }
+
+        .social-link {
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
+        .social-link:hover {
+            transform: scale(1.15); /* 滑鼠移上去時稍微放大 */
+        }
+
+        .social-link img {
+            width: 40px; /* 設定圖示的寬度 */
+            height: 40px; /* 設定圖示的高度 */
+        }
+        /* --- ✨ 新增：用於強制換行的網格樣式 --- */
+        .grid-row-break {
+            grid-column: 1 / -1; /* 關鍵！讓這個元素佔滿一整排的寬度 */
+            height: 0; /* 它本身不需要高度 */
+            margin: 0;
+            padding: 0;
+        }
+  </style>
+</head>
+
+<body>
+  <div style="display: none;">
+    <svg id="hanzi-grid-template" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="0" x2="100%" y2="100%" stroke="#DDD"></line>
+        <line x1="100%" y1="0" x2="0" y2="100%" stroke="#DDD"></line>
+        <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#DDD"></line>
+        <line x1="0" y1="50%" x2="100%" y2="50%" stroke="#DDD"></line>
+    </svg>
+  </div>
+  <section id="home-page">
+    <h1>繁體中文筆順練習</h1>
+    <a href="#practice-page" class="start-button">開始練習</a>
+  </section>
+
+  <main id="practice-page">
+
+    <div id="auth-ui">
+      <button id="google-login-button" class="mode-button" style="background-color: #fa9782; color: white;">
+          使用 Google 登入
+      </button>
+      <button id="logout-button" class="mode-button" style="background-color: #4285F4; color: white; display: none;">
+          登出
+      </button>
+      <span id="user-status">請登入以保存你的進度。</span>
+    </div>
+
+    <h1>繁體中文筆順練習</h1>
+
+    <div id="music-controls">
+      <audio id="background-audio"></audio>
+      <button id="play-pause-music-button"></button>
+    </div>
+
+    <div id="input-mode-selector">
+      <button id="direct-input-mode-btn" class="mode-button"></button>
+      <button id="file-input-mode-btn" class="mode-button"></button>
+      <button id="level-select-mode-btn" class="mode-button"></button>
+    </div>
+
+    <div id="input-container" style="position:relative;">
+      <div id="text-input-area">
+        <input type="text" id="text-input" placeholder="輸入或貼上練習文字">
+      </div>
+      <div id="file-input-area" style="display:none;">
+        <label for="file-input" class="file-input-label">點此選擇 .txt 檔案</label>
+        <input type="file" id="file-input" accept=".txt">
+        <span id="selected-file-name"></span>
+      </div>
+      <button id="process-data-button"></button>
+    </div>
+
+    <div id="level-selection-container" style="display:none;">
+      <p class="subtitle">請依序選擇 版本 → 年級 → 課次</p>
+      <div class="level-tier-container">
+        <div class="level-selection-column" id="version-selection-area">
+          <h3 class="level-selection-title">1. 選擇版本</h3>
+          <div class="level-buttons-wrapper"></div>
+        </div>
+        <div class="level-selection-column" id="grade-selection-area" style="display: none;">
+          <h3 class="level-selection-title">2. 選擇年級</h3>
+          <div class="level-buttons-wrapper"></div>
+        </div>
+        <div class="level-selection-column" id="lesson-selection-area" style="display: none;">
+          <h3 class="level-selection-title">3. 選擇課次</h3>
+          <div class="level-buttons-wrapper"></div>
+        </div>
+      </div>
+      <button id="reset-level-selection-button" style="display:none; margin-top: 15px;">重新選擇</button>
+    </div>
+
+    <div id="character-selection-buttons-container" style="display:none;">
+      <p class="subtitle" id="character-select-subtitle" style="display:none;">選擇要練習的字：</p>
+      <div id="character-selection-buttons">
+      </div>
+    </div>
+
+    <div id="practice-mode-selector">
+      <button id="normal-mode-practice-btn" class="practice-mode-button"></button>
+      <button id="challenge-mode-practice-btn" class="practice-mode-button"></button>
+    </div>
+
+    <div class="display-area-container">
+      <div id="animation-wrapper">
+        <div id="animation-display" class="hanzi-box"></div>
+        <button id="replay-animation-button" disabled></button>
+      </div>
+      <div id="quiz-area-wrapper">
+          <div id="quiz-display" class="hanzi-box">
+              <div id="reward-display-container"></div>
+          </div>
+          <div id="quiz-controls">
+              <button id="hint-next-stroke-button" style="display: none;"></button>
+          </div>
+      </div>
+    </div>
+
+    <div id="practiced-characters-container">
+      <h2>已練習字元</h2>
+      <div id="star-count-display">
+          <img src="images/star.png" alt="星星" />
+          <span id="stars-earned-count">0</span>
+      </div>
+      <div id="practiced-characters-list">
+      </div>
+      <a href="#progress-page" class="progress-link-button">查看我的學習進度</a>
+      <a href="#links-page" class="progress-link-button" style="background-color: #607D8B; margin-left: 10px;">外部資源</a>
+    </div>
+
+  </main>
+  
+  <section id="progress-page">
+    <div class="progress-main-layout">
+    
+        <div class="progress-left-column">
+            <div class="progress-container">
+                <h2>學習進度總覽</h2>
+                <div id="progress-char-count-display">
+                    <span class="star-icon">★</span>
+                    <span id="progress-char-count">0</span>
+                </div>
+                <p class="subtitle">累積練習字數</p>
+            </div>
+            <div class="progress-container">
+                <h2>已通關關卡</h2>
+                <div id="progress-levels-list">
+                    <p class="progress-level-placeholder">尚未通過任何關卡</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-right-column">
+            <div id="progress-reward-image-container">
+                </div>
+        </div>
+        
+    </div>
+    <a href="#practice-page" class="back-button">返回練習</a>
+  </section>
+  <section id="links-page">
+    <div class="links-page-content">
+      <h2>外部資源連結</h2>
+      <p class="subtitle">一些學習網站與工具</p>
+      <div id="links-container">
+        </div>
+    </div>
+    
+    <a href="#home-page" class="back-button">返回首頁</a>
+    <div id="social-links-container">
+        </div>
+  </section>
+
+  <div id="congrats-overlay"></div>
+
+  <script>
+    console.log("Script block parsing started.");
+
+    // ---- Firebase SDK CDN & Config (START) ----
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script>
+    // 你的 Firebase 配置代碼
+    const firebaseConfig = {
+        apiKey: "AIzaSyCtPrLtbss8CTrYHrPLrRyVjCxk2C5IVDw",
+        authDomain: "hanzi-writing-dbd3f.firebaseapp.com",
+        projectId: "hanzi-writing-dbd3f",
+        storageBucket: "hanzi-writing-dbd3f.firebasestorage.app",
+        messagingSenderId: "24075463788",
+        appId: "1:24075463788:web:3f29a7e064906e816f3c49",
+        measurementId: "G-3Z38C42HGW"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    // ---- Firebase SDK CDN & Config (END) ----
+
+    // ---- Global Variables ----
+    let animationInstance = null;
+    let quizInstance = null;
+    let currentDisplayChar = null;
+    let activeInputMode = 'direct';
+    let practicedCharSet = new Set();
+    let currentPracticeMode = 'normal';
+    let numCorrectStrokesInCurrentQuiz = 0;
+    let totalStrokesInCurrentChar = 0;
+    let currentLevelCharacterArray = [];
+    let currentLevelCharIndex = 0;
+    let completedLevels = []; 
+    let totalPracticedCount = 0; // ✨【新增】練習總次數計數器
+
+    let googleLoginButton, logoutButton, userStatusElem; 
+    let userAvatarElem = document.createElement('img');
+    userAvatarElem.id = 'user-avatar-display'; 
+    userAvatarElem.style.display = 'none'; 
+
+    let replayButtonElem, charSelectionContainerElem, textInputElem, textInputArea, fileInputAreaDiv,
+        processDataButtonElem, directInputModeBtnElem, fileInputModeBtnElem, levelSelectModeBtnElem,
+        fileInputElem, selectedFileNameDisplayElem, characterSelectSubtitleElem,
+        practicedCharsListDivElem, animationWrapperElem, backgroundAudioElem,
+        playPauseMusicButtonElem, inputContainerElem, levelSelectionContainerElem,
+        levelButtonsAreaElem, quizAreaWrapperElem, normalModePracticeBtn, challengeModePracticeBtn,
+        hintNextStrokeButton, practiceModeSelectorElem, rewardDisplayContainerElem;
+        
+    let allLevelsData = [];
+    const masterLevelIndexFile = 'levels/master-level-index.json';
+    // ✨ 3A. 新增：外部連結資料陣列
+    // 未來您只需要修改這裡，就可以新增、刪除或編輯連結！
+    const externalLinksData = [
+        {
+            title: '康軒試讀本',
+            description: '免費索取康軒讀本。',
+            url: 'https://ibanana.biz/3NUZ9',
+            icon: '📚' // 您可以用表情符號或圖片
+        },
+        {
+            title: '國字標準字體筆順學習網',
+            description: '教育部官方的筆順學習網站。',
+            url: 'https://stroke-order.learningweb.moe.edu.tw/',
+            icon: '✍️'
+        },
+        {
+            title: '我們在這裡上英文',
+            description: '51talk 免費試聽',
+            url: 'https://joymall.co/3NUZO',
+            icon: '📖'
+        },
+        // ✨ 1. 在這裡插入一個換行標記
+        //{ type: 'break' },
+        // ✨ 2. 在下面新增您想要的第四個、第五個...連結
+        //{
+        //    title: '新的連結按鈕',
+        //    description: '這是顯示在第二排的第一個按鈕。',
+        //    url: 'https://example.com',
+        //    icon: '🚀'
+        //}   
+    ];
+    // ✨ 3A. 新增：社群連結資料
+    // 未來您只需要修改這裡的網址！
+    const socialLinksData = [
+        {
+            name: 'Facebook',
+            url: 'https://www.facebook.com/bossyunlife', // <-- 請換成您的 Facebook 網址
+            icon_src: 'images/facebook_icon.png'  // <-- 請確認圖檔路徑
+        },
+        {
+            name: 'Instagram',
+            url: 'https://www.instagram.com/agnesc629/', // <-- 請換成您的 Instagram 網址
+            icon_src: 'images/instagram_icon.png' // <-- 請確認圖檔路徑
+        }
+    ];
+
+    const musicPlaylist = [ { name: "Ukulele", path: "audio/happy-whistling-ukulele-115485.mp3" } ];
+    let currentTrackIndex = 0;
+    let isMusicUserInitiated = false;
+
+// ✨ 1. 全新的「規則化」獎勵設定
+    const levelRewards = [
+        {
+            // 規則一：符合您舉例的「康軒一上 L1-L6」隨機影片
+            id: 'KANGXUAN_G1a_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '康軒',
+                grade: '一上',
+                lessons: ['第一課', '第二課', '第三課', '第四課', '第五課', '第六課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g1a/random_reward_1.mp4' },
+                { type: 'video', src: 'videos/g1a/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g1a/random_reward_3.mp4' }
+            ]
+        },
+        {
+            // 規則一：符合您舉例的「康軒一上 L1-L6」隨機影片
+            id: 'KANGXUAN_G1b1_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '康軒',
+                grade: '一下',
+                lessons: ['第一課', '第二課', '第三課', '第四課', '第五課', '第六課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g1b/random_reward_1.mp4' },
+                { type: 'video', src: 'videos/g1b/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g1b/random_reward_3.mp4' }
+            ]
+        },
+                {
+            // 規則一：符合您舉例的「康軒一上 L1-L6」隨機影片
+            id: 'KANGXUAN_G1b2_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '康軒',
+                grade: '一下',
+                lessons: ['第七課', '第八課', '第九課', '第十課', '第十一課', '第十二課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g1b/random_reward_4.mp4' },
+                { type: 'video', src: 'videos/g1b/random_reward_5.mp4' },
+                { type: 'video', src: 'videos/g1b/random_reward_6.mp4' }
+            ]
+        },
+        {
+            // 規則一：符合您舉例的「康軒一上 L1-L6」隨機影片
+            id: 'KANGXUAN_G2a1_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '康軒',
+                grade: '二上',
+                lessons: ['第一課', '第二課', '第三課', '第四課', '第五課', '第六課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g2a/random_reward_1.mp4' },
+                { type: 'video', src: 'videos/g2a/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g2a/random_reward_3.mp4' }
+            ]
+        },
+                {
+            id: 'KANGXUAN_G2a2_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '康軒',
+                grade: '二上',
+                lessons: ['第七課', '第八課', '第九課', '第十課', '第十一課', '第十二課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g2a/random_reward_3.mp4' },
+                { type: 'video', src: 'videos/g2a/random_reward_4.mp4' },
+                { type: 'video', src: 'videos/g2a/random_reward_5.mp4' },
+            ]
+        },   
+        {
+            id: 'KANGXUAN_G2b1_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '康軒',
+                grade: '二下',
+                lessons: ['第一課', '第二課', '第三課', '第四課', '第五課', '第六課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g2b/random_reward_1.mp4' },
+                { type: 'video', src: 'videos/g2b/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g2b/random_reward_3.mp4' }
+            ]
+        },
+                {
+            id: 'KANGXUAN_G2b2_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '康軒',
+                grade: '二下',
+                lessons: ['第七課', '第八課', '第九課', '第十課', '第十一課', '第十二課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g2b/random_reward_4.mp4' },
+                { type: 'video', src: 'videos/g2b/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g2b/random_reward_3.mp4' }
+            ]
+        },             
+        // 您可以在此新增更多規則...
+    ];
+
+    // ---- Function Definitions ----
+
+// ✨ 1. 新增：定義您的成就獎勵
+    // 您可以在這裡自由新增圖片和達成條件
+    const progressRewards = {
+        // 根據練習字數（星星數）的獎勵
+        byStars: {
+            1: { src: 'images/reward_star_10.jpg', name: '練習新星' },
+            30: { src: 'images/reward_star_30.jpg', name: '成長高手' },
+            60: { src: 'images/reward_star_60.jpg', name: '識字大師' },
+            100: { src: 'images/reward_star_100.jpeg', name: '寫字大師' },
+            150: { src: 'images/reward_star_150.jpeg', name: '寫字狂人' },
+            200: { src: 'images/reward_star_200.jpeg', name: '超級高手' },
+            
+        },
+        byLevel: {},
+        // 預設（沒有達成任何成就時）顯示的圖片
+        default: { src: 'images/reward_star_10.jpg', name: '開始你的旅程吧！' }
+    };
+
+    // ✨ 2. 新增：更新右側成就圖片的函式
+    // ✨ 請用此版本完整替換舊的函式
+    function updateProgressRewardImage() {
+        const imageContainer = document.getElementById('progress-reward-image-container');
+        if (!imageContainer) return;
+
+        let selectedReward = progressRewards.default; // 先設定為預設獎勵
+        let highestRewardFound = false;
+
+        // 優先檢查「已通關」的獎勵 (從最新完成的關卡開始檢查)
+        if (completedLevels.length > 0) {
+            for (let i = completedLevels.length - 1; i >= 0; i--) {
+                const levelName = completedLevels[i];
+                if (progressRewards.byLevel[levelName]) {
+                    selectedReward = progressRewards.byLevel[levelName];
+                    highestRewardFound = true;
+                    break; // 找到最高級的關卡獎勵就停止
+                }
+            }
+        }
+        
+        // 如果沒有找到任何關卡獎勵，再檢查「練習字數」的獎勵
+        if (!highestRewardFound) {
+            // ✨【修正】將 starCount 的來源從 practicedCharSet.size 改為 totalPracticedCount
+            const starCount = totalPracticedCount;
+            
+            const starThresholds = Object.keys(progressRewards.byStars).map(Number).sort((a, b) => b - a); // 從高到低排序
+            
+            for (const threshold of starThresholds) {
+                if (starCount >= threshold) {
+                    selectedReward = progressRewards.byStars[threshold];
+                    break; // 找到符合的最高級門檻就停止
+                }
+            }
+        }
+
+        // 更新畫面上的圖片和文字
+        imageContainer.innerHTML = `
+            <img src="${selectedReward.src}" alt="${selectedReward.name}">
+            <h3>${selectedReward.name}</h3>
+            <p>恭喜您達成此成就！</p>
+        `;
+    }
+    // ---- Function Definitions ----
+
+    // ✨ 3B. 新增：生成連結卡片的函式
+// ✨ 修改：讓函式能識別換行標記
+    function populateLinksPage() {
+        const container = document.getElementById('links-container');
+        if (!container) return;
+
+        container.innerHTML = ''; // 清空容器
+
+        externalLinksData.forEach(link => {
+            // 新增的判斷：如果物件類型是 'break'，就插入換行元素
+            if (link.type === 'break') {
+                const breakElement = `<div class="grid-row-break"></div>`;
+                container.innerHTML += breakElement;
+            } else {
+                // 否則，像以前一樣建立連結卡片
+                const cardHTML = `
+                    <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="link-card">
+                        <div class="link-card-icon">${link.icon}</div>
+                        <div class="link-card-text">
+                            <h4>${link.title}</h4>
+                            <p>${link.description}</p>
+                        </div>
+                    </a>
+                `;
+                container.innerHTML += cardHTML;
+            }
+        });
+    }
+
+    // ✨ 3B. 新增：生成社群連結圖示的函式
+    function populateSocialLinks() {
+        const container = document.getElementById('social-links-container');
+        if (!container) return;
+
+        container.innerHTML = ''; // 清空容器
+
+        socialLinksData.forEach(link => {
+            const linkHTML = `
+                <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="social-link" title="${link.name}">
+                    <img src="${link.icon_src}" alt="${link.name} Icon">
+                </a>
+            `;
+            container.innerHTML += linkHTML;
+        });
+    }
+
+
+    // 新增：更新進度頁面(左側)的函式
+    function updateProgressPage() {
+        const charCountElem = document.getElementById('progress-char-count');
+        const levelsListElem = document.getElementById('progress-levels-list');
+
+        if (charCountElem) {
+            charCountElem.textContent = totalPracticedCount;
+        }
+
+        if (levelsListElem) {
+            levelsListElem.innerHTML = ''; // 清空舊列表
+            if (completedLevels.length > 0) {
+                completedLevels.forEach(levelName => {
+                    const levelItem = document.createElement('div');
+                    levelItem.classList.add('progress-level-item');
+                    levelItem.textContent = levelName;
+                    levelsListElem.appendChild(levelItem);
+                });
+            } else {
+                // 如果沒有已通關的關卡，顯示提示文字
+                levelsListElem.innerHTML = '<p class="progress-level-placeholder">尚未通過任何關卡</p>';
+            }
+        }
+    }
+
+
+    function initializeDOMReferences() {
+        replayButtonElem = document.getElementById('replay-animation-button');
+        charSelectionContainerElem = document.getElementById('character-selection-buttons');
+        textInputElem = document.getElementById('text-input');
+        textInputArea = document.getElementById('text-input-area');
+        fileInputAreaDiv = document.getElementById('file-input-area');
+        processDataButtonElem = document.getElementById('process-data-button');
+        directInputModeBtnElem = document.getElementById('direct-input-mode-btn');
+        fileInputModeBtnElem = document.getElementById('file-input-mode-btn');
+        levelSelectModeBtnElem = document.getElementById('level-select-mode-btn');
+        fileInputElem = document.getElementById('file-input');
+        selectedFileNameDisplayElem = document.getElementById('selected-file-name');
+        characterSelectSubtitleElem = document.getElementById('character-select-subtitle');
+        practicedCharsListDivElem = document.getElementById('practiced-characters-list');
+        animationWrapperElem = document.getElementById('animation-wrapper');
+        backgroundAudioElem = document.getElementById('background-audio');
+        playPauseMusicButtonElem = document.getElementById('play-pause-music-button');
+        normalModePracticeBtn = document.getElementById('normal-mode-practice-btn');
+        challengeModePracticeBtn = document.getElementById('challenge-mode-practice-btn');
+        hintNextStrokeButton = document.getElementById('hint-next-stroke-button');
+        inputContainerElem = document.getElementById('input-container');
+        levelSelectionContainerElem = document.getElementById('level-selection-container');
+        levelButtonsAreaElem = document.getElementById('level-buttons-area');
+        quizAreaWrapperElem = document.getElementById('quiz-area-wrapper');
+        practiceModeSelectorElem = document.getElementById('practice-mode-selector');
+        rewardDisplayContainerElem = document.getElementById('reward-display-container');
+        
+        googleLoginButton = document.getElementById('google-login-button');
+        logoutButton = document.getElementById('logout-button');
+        userStatusElem = document.getElementById('user-status'); 
+        userStatusElem.prepend(userAvatarElem); 
+        document.getElementById('reset-level-selection-button').onclick = resetLevelSelection;        
+    }
+
+    function setupEventListeners() {
+        try {
+            if (normalModePracticeBtn) normalModePracticeBtn.onclick = () => setPracticeMode('normal');
+            if (challengeModePracticeBtn) challengeModePracticeBtn.onclick = () => setPracticeMode('challenge');
+            if (processDataButtonElem) processDataButtonElem.onclick = processInputData;
+            if (directInputModeBtnElem) directInputModeBtnElem.onclick = () => setActiveInputMode('direct');
+            if (fileInputModeBtnElem) fileInputModeBtnElem.onclick = () => setActiveInputMode('file');
+            if (levelSelectModeBtnElem) levelSelectModeBtnElem.onclick = () => setActiveInputMode('level');
+            if (fileInputElem) fileInputElem.onchange = updateSelectedFileName;
+            if (replayButtonElem) replayButtonElem.onclick = replayAnimation;
+            if (hintNextStrokeButton) {
+                hintNextStrokeButton.onclick = function() {
+                    if (quizInstance && (currentPracticeMode === 'challenge' || activeInputMode === 'level_practice')) {
+                        if (typeof quizInstance.highlightStroke === 'function' && totalStrokesInCurrentChar > 0) {
+                            const nextStrokeToHint = numCorrectStrokesInCurrentQuiz;
+                            if (nextStrokeToHint < totalStrokesInCurrentChar) {
+                                quizInstance.highlightStroke(nextStrokeToHint, { duration: 1200, color: '#FFD700' });
+                            } else {
+                                alert("太棒了，所有筆劃均已正確完成！");
+                            }
+                        } else {
+                            alert("無法提供提示功能 (E-H04)。");
+                        }
+                    }
+                };
+            }
+            setupMusicControls();
+
+            if (googleLoginButton) {
+                googleLoginButton.addEventListener('click', async () => {
+                    const provider = new firebase.auth.GoogleAuthProvider();
+                    try {
+                        await auth.signInWithPopup(provider);
+                    } catch (error) {
+                        console.error("Google 登入失敗:", error.message);
+                        userStatusElem.textContent = "登入失敗: " + error.message;
+                        userAvatarElem.style.display = 'none';
+                    }
+                });
+            }
+
+            if (logoutButton) {
+                logoutButton.addEventListener('click', async () => {
+                    try {
+                        await auth.signOut();
+                    } catch (error) {
+                        console.error("登出失敗:", error.message);
+                    }
+                });
+            }
+
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    userStatusElem.textContent = `${user.displayName || user.email}`;
+                    userAvatarElem.src = user.photoURL || '';
+                    userAvatarElem.alt = user.displayName || 'User Avatar';
+                    userAvatarElem.style.display = 'inline-block';
+
+                    googleLoginButton.style.display = 'none';
+                    logoutButton.style.display = 'block';
+
+                    const userDocRef = db.collection('users').doc(user.uid);
+                    try {
+                        const doc = await userDocRef.get();
+                        if (doc.exists) {
+                            const userData = doc.data();
+                            completedLevels = userData.completedLevels || [];
+                            practicedCharSet = new Set(userData.practicedChars || []);
+                            totalPracticedCount = userData.totalPracticedCount || 0; 
+                            console.log("用戶數據已載入:", userData);
+                        } else {
+                            await userDocRef.set({
+                                completedLevels: [],
+                                practicedChars: [],
+                                totalPracticedCount: 0,
+                                lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                            });
+                            completedLevels = [];
+                            practicedCharSet = new Set();
+                            console.log("新用戶數據已建立。");
+                        }
+                    } catch (error) {
+                        console.error("載入或初始化用戶數據失敗:", error);
+                        completedLevels = [];
+                        practicedCharSet = new Set();
+                    } finally {
+                        updatePracticedCharactersDisplay();
+                        //populateLevelSelectionUI();//
+                        updateProgressPage(); // ✨ 更新進度頁面
+                        updateProgressRewardImage(); 
+                    }
+
+                } else {
+                    userStatusElem.textContent = '請登入以保存你的進度。';
+                    userAvatarElem.style.display = 'none';
+
+                    googleLoginButton.style.display = 'block';
+                    logoutButton.style.display = 'none';
+
+                    completedLevels = [];
+                    practicedCharSet = new Set();
+                    totalPracticedCount = 0; 
+                    updatePracticedCharactersDisplay();
+                    //populateLevelSelectionUI();//
+                    updateProgressPage(); // ✨ 更新進度頁面
+                    updateProgressRewardImage(); 
+
+                    localStorage.removeItem('completedLevels');
+                    localStorage.removeItem('practicedCharSet');
+                }
+            });
+
+        } catch (error) {
+            console.error("Error during setupEventListeners:", error);
+        }
+    }
+
+    function initializeAppState() {
+            try {
+                directInputModeBtnElem.textContent = '輸入你想練的字';
+                fileInputModeBtnElem.textContent = '匯入檔案';
+                levelSelectModeBtnElem.textContent = '挑戰小學關卡';
+                processDataButtonElem.textContent = '處理資料';
+                replayButtonElem.textContent = '來看看筆順吧';
+                normalModePracticeBtn.textContent = '一般臨摹';
+                challengeModePracticeBtn.textContent = '挑戰模式';
+                hintNextStrokeButton.textContent = '提示下一筆';
+
+                setupMusicControls();
+                setActiveInputMode('direct');
+                setPracticeMode('normal');
+
+                loadLevelData();
+                if(animationWrapperElem) {
+                    animationWrapperElem.style.display = 'none';
+                }
+            } catch (error) {
+                console.error("Error during initializeAppState:", error);
+            }
+        }
+
+// 新增：用於儲存關卡選擇狀態的變數
+    let masterLevelData = null;
+    let selectedVersion = null;
+    let selectedGrade = null;
+
+    // 修改後的 loadLevelData 函式
+    async function loadLevelData() {
+        try {
+            // 現在只會載入主索引檔案
+            const response = await fetch(masterLevelIndexFile);
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            masterLevelData = await response.json();
+            // 載入成功後，生成第一層UI (版本選擇)
+            populateVersionUI(); 
+        } catch (error) {
+            alert("載入關卡主索引檔案失敗，請檢查檔案路徑或內容。");
+            console.error("Error loading master level index:", error);
+        }
+    }
+
+    // 新增：生成「版本」選項的函式
+    function populateVersionUI() {
+        const container = document.querySelector('#version-selection-area .level-buttons-wrapper');
+        container.innerHTML = '';
+        if (!masterLevelData) return;
+
+        Object.keys(masterLevelData).forEach(versionName => {
+            const button = createTierButton(versionName, () => {
+                selectedVersion = versionName;
+                // 更新按鈕選中狀態
+                document.querySelectorAll('#version-selection-area .tier-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // 顯示下一層並隱藏更後面的層級
+                document.getElementById('grade-selection-area').style.display = 'block';
+                document.getElementById('lesson-selection-area').style.display = 'none';
+                document.getElementById('reset-level-selection-button').style.display = 'inline-block';
+                populateGradeUI(); // 生成年級選項
+            });
+            container.appendChild(button);
+        });
+    }
+
+    // 新增：生成「年級」選項的函式
+    function populateGradeUI() {
+        const container = document.querySelector('#grade-selection-area .level-buttons-wrapper');
+        container.innerHTML = '';
+        const grades = masterLevelData[selectedVersion];
+
+        Object.keys(grades).forEach(gradeName => {
+            const button = createTierButton(gradeName, () => {
+                selectedGrade = gradeName;
+                document.querySelectorAll('#grade-selection-area .tier-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                document.getElementById('lesson-selection-area').style.display = 'block';
+                populateLessonUI(); // 生成課次選項
+            });
+            container.appendChild(button);
+        });
+    }
+
+    // 新增：生成「課次」選項的函式
+    function populateLessonUI() {
+        const container = document.querySelector('#lesson-selection-area .level-buttons-wrapper');
+        container.innerHTML = '';
+        const lessons = masterLevelData[selectedVersion][selectedGrade];
+
+        Object.keys(lessons).forEach(lessonName => {
+            const button = createTierButton(lessonName, async () => {
+                const lessonFilePath = lessons[lessonName];
+                try {
+                    // 直到最後一步才真正去載入課次的JSON檔案
+                    const response = await fetch(lessonFilePath);
+                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                    const lessonData = await response.json();
+                    currentActiveLevelData = { 
+                        levelName: `${selectedVersion} - ${selectedGrade} - ${lessonName}` 
+                    };                    
+                    // 成功取得課次資料，開始練習
+                    setActiveInputMode('level_practice');
+                    currentLevelCharacterArray = lessonData.characters;
+                    currentLevelCharIndex = 0;
+                    if (currentLevelCharacterArray.length > 0) {
+                        startLevelCharacterPractice(currentLevelCharacterArray[0]);
+                    } else {
+                        alert(`課次 "${lessonName}" 中沒有字元。`);
+                        resetLevelSelection();
+                    }
+
+                } catch (error) {
+                    alert(`載入課次檔案 "${lessonName}" 失敗。`);
+                    console.error("Error loading lesson file:", error);
+                }
+            });
+            container.appendChild(button);
+        });
+    }
+
+    // 新增：建立選項按鈕的輔助函式
+    function createTierButton(text, onClick) {
+        const button = document.createElement('button');
+        button.classList.add('tier-button');
+        button.textContent = text;
+        button.onclick = onClick;
+        return button;
+    }
+
+    // 新增：重置所有關卡選擇的輔助函式
+    function resetLevelSelection() {
+        selectedVersion = null;
+        selectedGrade = null;
+        document.getElementById('version-selection-area').querySelectorAll('.tier-button').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('grade-selection-area').style.display = 'none';
+        document.getElementById('lesson-selection-area').style.display = 'none';
+        document.getElementById('reset-level-selection-button').style.display = 'none';
+    }
+    function startLevelCharacterPractice(char) {
+        if (!char) {
+            handleLevelCompletion(currentActiveLevelData); 
+            return;
+        }
+        currentDisplayChar = char;
+        if (animationWrapperElem) animationWrapperElem.style.display = 'flex';
+        
+        const animBoxElement = document.getElementById('animation-display');
+        if (animBoxElement) {
+            // ✨【修改 START】
+            // 1. 取得 SVG 格線範本的 HTML 內容
+            const gridTemplate = document.getElementById('hanzi-grid-template').outerHTML;
+
+            // 2. 將動畫框的內容設定為我們的格線
+            animBoxElement.innerHTML = gridTemplate.replace('id="hanzi-grid-template"', 'id="animation-grid-svg"');
+            // ✨【修改 END】
+            
+            // ✨【修改】將 HanziWriter 的目標從 div 改為 SVG 的 ID
+            animationInstance = HanziWriter.create('animation-grid-svg', char, {
+                padding: 10,
+                strokeColor: '#000000', 
+                showCharacter: true, 
+                showOutline: false
+            });
+
+            if (replayButtonElem) replayButtonElem.disabled = false;
+            animationInstance.animateCharacter();
+        }
+        createQuizInstance(char);
+    }
+    function setActiveInputMode(mode) {
+        activeInputMode = mode;
+
+        if (animationWrapperElem) animationWrapperElem.style.display = 'none';
+
+        const quizBox = document.getElementById('quiz-display');
+        if (quizBox) {
+            const svg = quizBox.querySelector('svg:not(#congrats-overlay svg)');
+            if (svg) svg.remove();
+        }
+
+        hideAllRewards();
+
+        const charContainer = document.getElementById('character-selection-buttons-container');
+        if (charContainer) charContainer.style.display = 'none';
+        if (charSelectionContainerElem) charSelectionContainerElem.innerHTML = '';
+
+        // ✨【修正】增加 typeof 檢查，確保 cleanup 是個函式才呼叫
+        if (quizInstance && typeof quizInstance.cleanup === 'function') {
+            quizInstance.cleanup();
+        }
+        if (animationInstance && typeof animationInstance.cleanup === 'function') {
+            animationInstance.cleanup();
+        }
+        quizInstance = null;
+        animationInstance = null;
+        currentDisplayChar = null;
+
+        if (!directInputModeBtnElem || !inputContainerElem || !levelSelectionContainerElem) return;
+
+        directInputModeBtnElem.classList.toggle('active', mode === 'direct');
+        fileInputModeBtnElem.classList.toggle('active', mode === 'file');
+        levelSelectModeBtnElem.classList.toggle('active', mode === 'level' || mode === 'level_practice');
+
+        inputContainerElem.style.display = (mode === 'direct' || mode === 'file') ? 'flex' : 'none';
+        levelSelectionContainerElem.style.display = (mode === 'level') ? 'flex' : 'none';
+
+        const isCustomMode = (mode === 'direct' || mode === 'file');
+        const isLevelMode = (mode === 'level' || mode === 'level_practice');
+
+        if(practiceModeSelectorElem) {
+            practiceModeSelectorElem.style.display = isLevelMode ? 'none' : 'flex';
+        }
+
+        if (isCustomMode) {
+            if (characterSelectSubtitleElem) characterSelectSubtitleElem.style.display = 'none';
+            if (mode === 'direct') showDirectInputModeInternal(); else showFileUploadModeInternal();
+        }
+        if (mode === 'level') {
+            resetLevelSelection(); 
+        }
+    }
+
+    function showDirectInputModeInternal() {
+        if(textInputArea) textInputArea.style.display = 'flex';
+        if(fileInputAreaDiv) fileInputAreaDiv.style.display = 'none';
+    }
+    function showFileUploadModeInternal() {
+        if(textInputArea) textInputArea.style.display = 'none';
+        if(fileInputAreaDiv) fileInputAreaDiv.style.display = 'flex';
+    }
+
+    function updateSelectedFileName() {
+        if (fileInputElem?.files.length > 0) { if (selectedFileNameDisplayElem) selectedFileNameDisplayElem.textContent = `已選檔案: ${fileInputElem.files[0].name}`; }
+        else { if (selectedFileNameDisplayElem) selectedFileNameDisplayElem.textContent = ''; }
+    }
+
+    function processInputData() {
+      try {
+        const charContainer = document.getElementById('character-selection-buttons-container');
+        if (charContainer) {
+            charContainer.style.display = 'none';
+        }
+
+        if(charSelectionContainerElem) charSelectionContainerElem.innerHTML = '';
+        
+        // ✨【修正】增加 typeof 檢查
+        if (animationInstance && typeof animationInstance.cleanup === 'function') {
+            animationInstance.cleanup();
+        }
+        if (quizInstance && typeof quizInstance.cleanup === 'function') {
+            quizInstance.cleanup();
+        }
+        animationInstance = null; 
+        quizInstance = null; 
+        currentDisplayChar = null;
+        
+        if(replayButtonElem) replayButtonElem.disabled = true;
+        if (animationWrapperElem) animationWrapperElem.style.display = 'none';
+
+        const quizBox = document.getElementById('quiz-display');
+        if (quizBox) {
+            const svg = quizBox.querySelector('svg:not(#congrats-overlay svg)');
+            if (svg) svg.remove();
+        }
+
+        if (characterSelectSubtitleElem) characterSelectSubtitleElem.style.display = 'none';
+        if (hintNextStrokeButton) hintNextStrokeButton.style.display = 'none';
+        numCorrectStrokesInCurrentQuiz = 0; totalStrokesInCurrentChar = 0;
+        if (activeInputMode === 'direct') {
+            if (!textInputElem) { alert("錯誤：找不到文字輸入框元件！"); return; }
+            const text = textInputElem.value.trim();
+            if (text.length > 0) generateCharacterButtons(text); else alert("請輸入文字！");
+        } else if (activeInputMode === 'file') {
+            if (!fileInputElem || !fileInputElem.files || fileInputElem.files.length === 0) { alert("請選擇一個檔案！"); return; }
+            const file = fileInputElem.files[0];
+            if (file) {
+              const reader = new FileReader();
+              reader.onload = function(e) { generateCharacterButtons(e.target.result); };
+              reader.onerror = function() { alert("讀取檔案時發生錯誤。"); };
+              reader.readAsText(file, 'UTF-8');
+            }
+        }
+      } catch (error) { console.error("Error in processInputData:", error); }
+    }
+
+    function generateCharacterButtons(text) {
+      try {
+        const uniqueChars = [...new Set(text.replace(/[^\u4e00-\u9fa5]/g, ''))];
+        if(charSelectionContainerElem) charSelectionContainerElem.innerHTML = '';
+        if (uniqueChars.length > 0) {
+            const charContainer = document.getElementById('character-selection-buttons-container');
+            if (charContainer) {
+                charContainer.style.display = 'block';
+            }
+
+            if (characterSelectSubtitleElem) characterSelectSubtitleElem.style.display = 'block';
+            if (charSelectionContainerElem) charSelectionContainerElem.style.display = 'flex';
+            uniqueChars.forEach(char => {
+            const button = document.createElement('button');
+            button.classList.add('char-select-button');
+            button.textContent = char;
+            button.onclick = function() {
+                document.querySelectorAll('.char-select-button.active').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                displayCharacterInBothModes(char);
+            };
+            if(charSelectionContainerElem) charSelectionContainerElem.appendChild(button);
+            });
+        } else {
+            alert("未在輸入中找到有效的中文字元進行練習！");
+        }
+      } catch (error) { console.error("Error in generateCharacterButtons:", error); }
+    }
+
+    function setPracticeMode(mode) {
+        currentPracticeMode = mode;
+        if (!normalModePracticeBtn || !challengeModePracticeBtn || !hintNextStrokeButton) return;
+        normalModePracticeBtn.classList.toggle('active', mode === 'normal');
+        challengeModePracticeBtn.classList.toggle('active', mode === 'challenge');
+        let showHint = (mode === 'challenge' && quizInstance && currentDisplayChar);
+        if (activeInputMode === 'level_practice') { showHint = false; }
+        hintNextStrokeButton.style.display = showHint ? 'inline-block' : 'none';
+        if (currentDisplayChar && quizInstance) { createQuizInstance(currentDisplayChar); }
+    }
+
+    function createQuizInstance(char) {
+        const quizBox = document.getElementById('quiz-display');
+        if (!quizBox) return;
+
+        // ✨【修改 START】
+        // 1. 取得 SVG 格線範本的 HTML 內容
+        const gridTemplate = document.getElementById('hanzi-grid-template').outerHTML;
+        
+        // 2. 將臨摹框的內容設定為我們的格線。我們給這個格線一個新的、獨立的 ID。
+        quizBox.innerHTML = gridTemplate.replace('id="hanzi-grid-template"', 'id="quiz-grid-svg"');
+        // ✨【修改 END】
+
+        const options = {
+            padding: 20,
+            strokeColor: '#000000', 
+            drawingColor: '#333333',
+            highlightOnComplete: true,
+            onLoadCharDataSuccess: function(charDataObj) {
+                if (quizInstance?.quiz) {
+                    quizInstance.quiz({
+                        onCorrectStroke: () => {},
+                        onComplete: () => {
+                            totalPracticedCount++;
+                            practicedCharSet.add(char);
+                            updatePracticedCharactersDisplay();
+                            updateProgressPage();
+                            updateProgressRewardImage();
+                            saveUserDataToFirebase({ 
+                                practicedChars: Array.from(practicedCharSet),
+                                totalPracticedCount: totalPracticedCount
+                            });
+                            if (activeInputMode === 'level_practice') {
+                                currentLevelCharIndex++;
+                                setTimeout(() => startLevelCharacterPractice(currentLevelCharacterArray[currentLevelCharIndex]), 500);
+                            }
+                        }
+                    });
+                }
+            }
+        };
+
+        if (currentPracticeMode === 'challenge' || activeInputMode === 'level_practice') {
+            options.showOutline = false;
+        } else {
+            options.showOutline = true;
+            options.outlineColor = '#DDDDDD';
+        }
+        
+        // ✨【修改】將 HanziWriter 的目標從 div 改為我們剛剛建立的 SVG 的 ID
+        quizInstance = HanziWriter.create('quiz-grid-svg', char, options);
+    }
+
+    function displayCharacterInBothModes(char) {
+      try {
+        currentDisplayChar = char;
+        if (animationWrapperElem) animationWrapperElem.style.display = 'flex';
+        if (practiceModeSelectorElem) practiceModeSelectorElem.style.display = 'flex';
+        
+        const animBoxElement = document.getElementById('animation-display');
+        const quizBoxElement = document.getElementById('quiz-display');
+
+        if(animBoxElement) animBoxElement.innerHTML = '';
+        if(quizBoxElement){
+            const hanziWriterSVG = quizBoxElement.querySelector('svg:not(#congrats-overlay svg)');
+            if (hanziWriterSVG) hanziWriterSVG.remove();
+        }
+
+        // ✨【修正】增加 typeof 檢查
+        if (animationInstance && typeof animationInstance.cleanup === 'function') {
+            animationInstance.cleanup();
+        }
+        if (quizInstance && typeof quizInstance.cleanup === 'function') {
+            quizInstance.cleanup();
+        }
+        animationInstance = null; 
+        quizInstance = null;
+
+        numCorrectStrokesInCurrentQuiz = 0; 
+        totalStrokesInCurrentChar = 0;
+        if(replayButtonElem) replayButtonElem.disabled = true;
+        if (hintNextStrokeButton) { hintNextStrokeButton.style.display = 'none'; hintNextStrokeButton.disabled = true; }
+
+        if (animBoxElement) {
+            const gridTemplate = document.getElementById('hanzi-grid-template').outerHTML;
+            animBoxElement.innerHTML = gridTemplate.replace('id="hanzi-grid-template"', 'id="animation-grid-svg"');
+            
+            animationInstance = HanziWriter.create('animation-grid-svg', char, {
+                strokeColor: '#000000', 
+                showCharacter: true, 
+                showOutline: false,
+                strokeAnimationSpeed: 0.6, 
+                delayBetweenStrokes: 80, 
+                autoAnimate: false,
+                onLoadCharDataSuccess: function() { 
+                    if (animationInstance) { 
+                        animationInstance.animateCharacter(); 
+                        if(replayButtonElem) replayButtonElem.disabled = false;
+                    }
+                },
+            });
+
+            if (!animationInstance && replayButtonElem) { replayButtonElem.disabled = true; }
+        }
+        createQuizInstance(char);
+      } catch (error) { console.error("Error in displayCharacterInBothModes for " + char + ":", error); }
+    }
+
+    function replayAnimation() { if (animationInstance) { animationInstance.animateCharacter();}}
+    function updatePracticedCharactersDisplay() {
+        if (!practicedCharsListDivElem) return;
+        practicedCharsListDivElem.innerHTML = '';
+        if (practicedCharSet.size === 0) { practicedCharsListDivElem.textContent = '尚未練習任何字元。'; return;}
+        const charsArray = Array.from(practicedCharSet);
+        charsArray.forEach(practicedChar => {
+            const charSpan = document.createElement('span');
+            charSpan.classList.add('practiced-char-item');
+            charSpan.textContent = practicedChar;
+            practicedCharsListDivElem.appendChild(charSpan);});
+    }
+// ✨ 2. 全新的「獎勵搜尋」函式
+    function findRewardForLevel(levelName) {
+        if (!levelName) return null;
+
+        // 將 "康軒 - 一年級 - 第一課" 這樣的名稱拆解成三個部分
+        const parts = levelName.split(' - ');
+        if (parts.length < 3) return null;
+        
+        const currentVersion = parts[0];
+        const currentGrade = parts[1];
+        const currentLesson = parts[2];
+
+        // 遍歷所有獎勵規則
+        for (const rule of levelRewards) {
+            const cond = rule.conditions;
+            // 檢查版本、年級、課次是否都符合規則
+            const versionMatch = cond.version === currentVersion;
+            const gradeMatch = cond.grade === currentGrade;
+            const lessonMatch = cond.lessons.includes(currentLesson);
+
+            if (versionMatch && gradeMatch && lessonMatch) {
+                return rule.rewards; // 找到符合的規則，返回其獎勵陣列
+            }
+        }
+
+        return null; // 如果沒有任何規則符合，返回 null
+    }
+// ✨ 3. 修改通關動畫函式以支援隨機播放
+    function playLevelCompletionAnimation(levelData) {
+        const overlay = document.getElementById('congrats-overlay');
+        if (!overlay || !levelData || !levelData.levelName) return;
+
+        // 使用新的搜尋函式來尋找符合條件的獎勵池 (一個陣列)
+        const rewardPool = findRewardForLevel(levelData.levelName);
+
+        // 檢查是否找到了獎勵池，且池中有獎勵
+        if (!rewardPool || rewardPool.length === 0) {
+            console.log(`沒有為關卡 "${levelData.levelName}" 設定任何獎勵。`);
+            // 即使沒有影片，也顯示恭喜訊息並正常返回
+            overlay.innerHTML = `<h2>恭喜！您已完成 ${levelData.levelName}！</h2>`;
+            overlay.style.display = 'flex';
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    setActiveInputMode('level');
+                }, 500);
+            }, 3000);
+            return; // 提前結束函式
+        }
+
+        // 從獎勵池中隨機挑選一個獎勵
+        const selectedReward = rewardPool[Math.floor(Math.random() * rewardPool.length)];
+
+        // --- 後續的顯示邏輯與之前類似 ---
+        const DESIRED_PLAY_COUNT = 1; // 預設播放一次，您可以調整
+        let content = `<h2>恭喜！您已完成 ${levelData.levelName}！</h2>`;
+
+        if (selectedReward && selectedReward.src) {
+            if (selectedReward.type === 'video') {
+                content += `<video src="${selectedReward.src}" autoplay muted playsinline class="congrats-image"></video>`;
+            } else {
+                content += `<img src="${selectedReward.src}" alt="完成獎勵" class="congrats-image">`;
+            }
+        }
+
+        overlay.innerHTML = content;
+        
+        const videoElement = overlay.querySelector('video');
+        if (videoElement) {
+            let playCount = 0; 
+            videoElement.addEventListener('ended', () => {
+                playCount++;
+                if (playCount < DESIRED_PLAY_COUNT) {
+                    videoElement.play();
+                } else {
+                    fadeOutAndHide();
+                }
+            });
+        } else {
+             // 如果是圖片，則固定時間後消失
+             setTimeout(fadeOutAndHide, 4000);
+        }
+
+        function fadeOutAndHide() {
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                setActiveInputMode('level');
+            }, 500);
+        }
+
+        overlay.style.display = 'flex';
+        setTimeout(() => {
+            overlay.style.opacity = '1';
+        }, 10);
+    }
+
+    function handleLevelCompletion(levelData) {
+        if (!levelData || !levelData.levelName) return;
+        if (!completedLevels.includes(levelData.levelName)) {
+            completedLevels.push(levelData.levelName);
+            saveUserDataToFirebase({ completedLevels: completedLevels });
+            updateProgressPage(); 
+            updateProgressRewardImage();
+        }
+        playLevelCompletionAnimation(levelData);
+    }
+
+    async function saveUserDataToFirebase(dataToSave) {
+        if (auth.currentUser) {
+            const userDocRef = db.collection('users').doc(auth.currentUser.uid);
+            try {
+                await userDocRef.set(dataToSave, { merge: true });
+                console.log("用戶數據已保存到 Firebase:", dataToSave);
+            } catch (error) {
+                console.error("保存用戶數據到 Firebase 失敗:", error);
+            }
+        } else {
+            console.warn("用戶未登入，數據無法保存到 Firebase。");
+        }
+    }
+
+    function showReward(rewardIdentifier, rewardType) {
+        if (!rewardDisplayContainerElem) return;
+        let reward = levelRewards[rewardIdentifier];
+
+        if (!reward) { rewardDisplayContainerElem.style.display = 'none'; return; }
+
+        rewardDisplayContainerElem.innerHTML = '';
+        rewardDisplayContainerElem.style.width = reward.size || '150px';
+        if (reward.type === 'image') {
+            const img = document.createElement('img');
+            img.src = reward.src;
+            img.alt = `完成獎勵`;
+            img.onerror = () => { rewardDisplayContainerElem.innerHTML = '<p style="color:red;font-size:12px;">獎勵圖片載入失敗</p>'; };
+            rewardDisplayContainerElem.appendChild(img);
+        }
+        rewardDisplayContainerElem.style.display = 'block';
+
+        rewardDisplayContainerElem.style.transform = 'translateY(100%) translateX(100%)';
+        rewardDisplayContainerElem.style.opacity = '0';
+        setTimeout(() => {
+            rewardDisplayContainerElem.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
+            rewardDisplayContainerElem.style.transform = 'translateY(-10px) translateX(-10px)';
+            rewardDisplayContainerElem.style.opacity = '1';
+        }, 50);
+
+        setTimeout(() => {
+            rewardDisplayContainerElem.style.transition = 'transform 0.3s ease-in, opacity 0.3s ease-in';
+            rewardDisplayContainerElem.style.transform = 'translateY(-50px) translateX(-10px)';
+            rewardDisplayContainerElem.style.opacity = '0';
+        }, 1000);
+
+        setTimeout(() => {
+            rewardDisplayContainerElem.style.display = 'none';
+            rewardDisplayContainerElem.style.transform = 'translateY(100%) translateX(100%)';
+        }, 1300);
+    }
+
+    function hideAllRewards() {
+        if (rewardDisplayContainerElem) { rewardDisplayContainerElem.style.display = 'none'; }
+    }
+
+    function setupMusicControls() {
+        if (!playPauseMusicButtonElem || !backgroundAudioElem) { console.error("Music elements not found."); return; }
+        playPauseMusicButtonElem.onclick = function() { if (!isMusicUserInitiated || backgroundAudioElem.paused) { playCurrentTrack(); } else { backgroundAudioElem.pause(); playPauseMusicButtonElem.textContent = '開啟背景音樂'; }};
+        backgroundAudioElem.onended = function() { currentTrackIndex = (currentTrackIndex + 1) % musicPlaylist.length; loadTrack(currentTrackIndex, true); };
+        backgroundAudioElem.onerror = function(e) { playPauseMusicButtonElem.textContent = '播放錯誤'; playPauseMusicButtonElem.disabled = true; console.error("Audio error:", e);};
+        if (musicPlaylist.length === 0) { playPauseMusicButtonElem.textContent = '無音樂'; playPauseMusicButtonElem.disabled = true; }
+        else { playPauseMusicButtonElem.textContent = '開啟背景音樂'; playPauseMusicButtonElem.disabled = false; loadTrack(0, false); }
+    }
+
+    function loadTrack(trackIndex, playWhenLoaded = false) {
+        if (!backgroundAudioElem || !playPauseMusicButtonElem ) { return; }
+        currentTrackIndex = (trackIndex < 0 || trackIndex >= musicPlaylist.length) ? 0 : trackIndex;
+        if (musicPlaylist.length === 0) { playPauseMusicButtonElem.textContent = '無音樂'; playPauseMusicButtonElem.disabled = true; return; }
+        const track = musicPlaylist[currentTrackIndex];
+        if (!track || !track.path) { playPauseMusicButtonElem.textContent = '音軌錯誤'; playPauseMusicButtonElem.disabled = true; return; }
+        backgroundAudioElem.src = track.path; backgroundAudioElem.load();
+        if (playWhenLoaded) playCurrentTrack(); else { playPauseMusicButtonElem.textContent = '開啟背景音樂'; playPauseMusicButtonElem.disabled = false; }
+    }
+
+    function playCurrentTrack() {
+        if (!backgroundAudioElem || !playPauseMusicButtonElem) { return; }
+        if (musicPlaylist.length === 0) { return; }
+        const playPromise = backgroundAudioElem.play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => { playPauseMusicButtonElem.textContent = '關閉背景音樂'; isMusicUserInitiated = true; })
+                       .catch(error => { console.warn("Audio play failed:", error); playPauseMusicButtonElem.textContent = '開啟背景音樂'; });
+        }
+    }
+
+    // --- Window Onload: The main entry point ---
+    window.onload = function() {
+        console.log("window.onload executed.");
+        initializeDOMReferences();
+        setupEventListeners();
+        initializeAppState();
+        populateLinksPage(); 
+        populateSocialLinks();
+    };
+  </script>
+</body>
+</html>

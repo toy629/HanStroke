@@ -1075,8 +1075,10 @@
     // ---- Firebase SDK CDN & Config (START) ----
     </script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
     <script>
     // 你的 Firebase 配置代碼
     const firebaseConfig = {
@@ -1092,6 +1094,11 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
+    const analytics = firebase.analytics();
+
+    console.log("Firebase has been initialized successfully!");
+
+
     // ---- Firebase SDK CDN & Config (END) ----
 
     // ---- Global Variables ----
@@ -1269,7 +1276,192 @@
                 { type: 'video', src: 'videos/g2b/random_reward_2.mp4' },
                 { type: 'video', src: 'videos/g2b/random_reward_3.mp4' }
             ]
-        },             
+        },
+                {
+            // 規則一：符合您舉例的「南一一上 L1-L6」隨機影片
+            id: 'nan-i_G1a_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '南一',
+                grade: '一上',
+                lessons: ['魔法文字','第一課', '第二課', '第三課', '第四課', '第五課', '第六課','第七課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g1a/random_reward_1.mp4' },
+                { type: 'video', src: 'videos/g1a/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g1a/random_reward_3.mp4' }
+            ]
+        },
+        {
+            id: 'nan-i_G1b1_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '南一',
+                grade: '一下',
+                lessons: ['第一課', '第二課', '第三課', '第四課', '第五課', '第六課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g1b/random_reward_1.mp4' },
+                { type: 'video', src: 'videos/g1b/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g1b/random_reward_3.mp4' }
+            ]
+        },
+                {
+            id: 'nan-i_G1b2_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '南一',
+                grade: '一下',
+                lessons: ['第七課', '第八課', '第九課', '第十課', '第十一課', '第十二課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g1b/random_reward_4.mp4' },
+                { type: 'video', src: 'videos/g1b/random_reward_5.mp4' },
+                { type: 'video', src: 'videos/g1b/random_reward_6.mp4' }
+            ]
+        },
+        {
+            id: 'nan-i_G2a1_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '南一',
+                grade: '二上',
+                lessons: ['第一課', '第二課', '第三課', '第四課', '第五課', '第六課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g2a/random_reward_1.mp4' },
+                { type: 'video', src: 'videos/g2a/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g2a/random_reward_3.mp4' }
+            ]
+        },
+                {
+            id: 'nan-i_G2a2_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '南一',
+                grade: '二上',
+                lessons: ['第七課', '第八課', '第九課', '第十課', '第十一課', '第十二課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g2a/random_reward_3.mp4' },
+                { type: 'video', src: 'videos/g2a/random_reward_4.mp4' },
+                { type: 'video', src: 'videos/g2a/random_reward_5.mp4' },
+            ]
+        },   
+        {
+            id: 'nan-i_G2b1_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '南一',
+                grade: '二下',
+                lessons: ['第一課', '第二課', '第三課', '第四課', '第五課', '第六課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g2b/random_reward_1.mp4' },
+                { type: 'video', src: 'videos/g2b/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g2b/random_reward_3.mp4' }
+            ]
+        },
+                {
+            id: 'nan-i_G2b2_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '南一',
+                grade: '二下',
+                lessons: ['第七課', '第八課', '第九課', '第十課', '第十一課', '第十二課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g2b/random_reward_4.mp4' },
+                { type: 'video', src: 'videos/g2b/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g2b/random_reward_3.mp4' }
+            ]
+        },    
+               {
+            // 規則一：符合您舉例的「南一一上 L1-L6」隨機影片
+            id: 'han-lin_G1a_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '翰林',
+                grade: '一上',
+                lessons: ['第一課', '第二課', '第三課', '第四課', '第五課', '第六課','第七課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g1a/random_reward_1.mp4' },
+                { type: 'video', src: 'videos/g1a/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g1a/random_reward_3.mp4' }
+            ]
+        },
+        {
+            id: 'han-lin_G1b1_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '翰林',
+                grade: '一下',
+                lessons: ['第一課', '第二課', '第三課', '第四課', '第五課', '第六課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g1b/random_reward_1.mp4' },
+                { type: 'video', src: 'videos/g1b/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g1b/random_reward_3.mp4' }
+            ]
+        },
+                {
+            id: 'han-lin_G1b2_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '翰林',
+                grade: '一下',
+                lessons: ['第七課', '第八課', '第九課', '第十課', '第十一課', '第十二課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g1b/random_reward_4.mp4' },
+                { type: 'video', src: 'videos/g1b/random_reward_5.mp4' },
+                { type: 'video', src: 'videos/g1b/random_reward_6.mp4' }
+            ]
+        },
+        {
+            id: 'han-lin_G2a1_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '康軒',
+                grade: '二上',
+                lessons: ['第一課', '第二課', '第三課', '第四課', '第五課', '第六課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g2a/random_reward_1.mp4' },
+                { type: 'video', src: 'videos/g2a/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g2a/random_reward_3.mp4' }
+            ]
+        },
+                {
+            id: 'han-lin_G2a2_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '翰林',
+                grade: '二上',
+                lessons: ['第七課', '第八課', '第九課', '第十課', '第十一課', '第十二課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g2a/random_reward_3.mp4' },
+                { type: 'video', src: 'videos/g2a/random_reward_4.mp4' },
+                { type: 'video', src: 'videos/g2a/random_reward_5.mp4' },
+            ]
+        },   
+        {
+            id: 'han-lin_G2b1_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '翰林',
+                grade: '二下',
+                lessons: ['第一課', '第二課', '第三課', '第四課', '第五課', '第六課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g2b/random_reward_1.mp4' },
+                { type: 'video', src: 'videos/g2b/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g2b/random_reward_3.mp4' }
+            ]
+        },
+                {
+            id: 'han-lin_G2b2_INTRO', // 給這個規則一個獨特的名稱
+            conditions: {
+                version: '翰林',
+                grade: '二下',
+                lessons: ['第七課', '第八課', '第九課', '第十課', '第十一課', '第十二課']
+            },
+            rewards: [ // 這個陣列中可以放多個獎勵，系統會隨機挑選一個
+                { type: 'video', src: 'videos/g2b/random_reward_4.mp4' },
+                { type: 'video', src: 'videos/g2b/random_reward_2.mp4' },
+                { type: 'video', src: 'videos/g2b/random_reward_3.mp4' }
+            ]
+        },    
+                 
         // 您可以在此新增更多規則...
     ];
 

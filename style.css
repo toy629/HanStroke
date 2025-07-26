@@ -1,0 +1,905 @@
+.page-description {
+/* 讓文字置中對齊 */
+text-align: center;
+
+/* 設定適合深色背景的文字顏色 */
+color: #ECEFF1;
+
+/* 設定與下方按鈕的間距 */
+margin-bottom: 25px;
+
+/* 其他可選樣式 */
+font-size: 1em;
+font-weight: normal;
+max-width: 500px; /* 避免在寬螢幕上文字行過長 */
+margin-left: auto;   /* 搭配 max-width 實現置中 */
+margin-right: auto;  /* 搭配 max-width 實現置中 */
+line-height: 1;    /* 增加行高，讓文字更好閱讀 */
+}
+
+/* --- 全域設定 --- */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ✨ 新增：強制所有按鈕和輸入框繼承字體 */
+button,
+input,
+select,
+textarea {
+    font-family: inherit; /* 關鍵！讓這些元素繼承父層的字體設定 */
+}
+
+body {
+    font-family: 'MyGlobalFont', "PingFang TC", "Microsoft JhengHei", sans-serif;
+    /* ... 您其他的 body 樣式 ... */
+}
+body{
+    font-family:'FangYun','Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    margin:0;
+    color:#333;
+    font-weight:600;
+    background-color: #f4f4f4; /* 為頁面之間設定一個統一的底色 */
+}
+
+/* --- 首頁區塊樣式 --- */
+#home-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+    background-image: url('images/homepage.webp'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+}
+
+#home-page h1 {
+    font-size: 3em;
+    color: #5D4037;
+    text-shadow: 0px 2px 4px rgba(255, 255, 255, 0.5);
+    margin: 10px 0;
+    font-weight: 700;
+}
+
+#home-page .start-button {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 15px 40px;
+    font-size: 1.2em;
+    font-weight: 600;
+    color: white;
+    background-color: #A1887F;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+#home-page .start-button:hover {
+    background-color: #8D6E63;
+    transform: translateY(-2px);
+}
+
+/* --- 筆順練習區塊樣式 --- */
+#practice-page {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding:10px 80px 40px 10px; /* 增加底部 padding */
+    box-sizing: border-box;
+    min-height: 100vh;
+    position: relative;
+    background-color: #fff8eb; /* 使用純白背景 */
+}
+
+/* --- 新增：學習進度頁面樣式 --- */
+/* --- 學習進度頁面樣式 --- */
+#progress-page {
+    display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 40px 20px; box-sizing: border-box; background: linear-gradient(135deg, #fff8eb 0%, #fef9ed 100%);
+}
+/* ✨ 以下是實現左右佈局的關鍵 CSS ✨ */
+.progress-main-layout {
+    display: flex; flex-direction: row; align-items: flex-start; gap: 30px; width: 100%; max-width: 900px; margin-bottom: 30px;
+}
+.progress-left-column {
+    flex: 1; display: flex; flex-direction: column; gap: 0px;
+}
+.progress-right-column {
+    flex: 1; display: flex; align-items: flex-start;
+}
+/* 在小螢幕上變回垂直排列 */
+@media (max-width: 768px) {
+    .progress-main-layout {
+    flex-direction: column;
+    }
+}
+
+.progress-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    width: 90%;
+    max-width: 600px;
+    margin-bottom: 10px;
+}
+
+.progress-container h2 {
+    font-size: 1.8em;
+    color: #00695c;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+#progress-char-count-display {
+    font-size: 4em;
+    font-weight: 700;
+    color: #FFD700; /* 金色 */
+    line-height: 1;
+}
+
+#progress-char-count-display .star-icon {
+    font-size: 0.8em; /* 星星比數字小一點 */
+    vertical-align: super;
+    margin-right: 5px;
+}
+
+#progress-levels-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.progress-level-item {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.progress-level-placeholder {
+    color: #888;
+    font-style: italic;
+}
+/* 新增：右側獎勵圖片容器樣式 */
+#progress-reward-image-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    width: 100%;
+    aspect-ratio: 1 / 1
+}
+
+/* ✨ 新增：控制成就圖片的大小和樣式 */
+#progress-reward-image-container img {
+    width: 100%; /* 寬度填滿其白色容器 */
+    max-width: 100%;
+    max-height: 250px; /* 設定一個最大高度，您可以自行調整這個數字 */
+    object-fit: cover; /* 確保圖片在限制尺寸內能完整顯示，不變形 */
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+#progress-reward-image-container h3 {
+    font-size: 1.4em;
+    color: #BF360C;
+    margin: 0 0 5px 0;
+}
+
+#progress-reward-image-container p {
+    color: #555;
+    margin: 0;
+}
+.back-button {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 25px;
+    font-size: 1em;
+    font-weight: 600;
+    color: #333;
+    background-color: #e0e0e0;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+.back-button:hover {
+    background-color: #bdbdbd;
+}
+
+
+/* 新增：前往進度頁面的按鈕樣式 */
+.progress-link-button {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #f9a898;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+.progress-link-button:hover {
+    background-color: #f9a898;
+}
+
+/* ✨ 1. 新增：定義您的「全域字體」 */
+@font-face {
+    font-family: 'FangYun'; /* 為您的全域字體取一個獨特的名字 */
+    src: url('fonts/jf-openhuninn-2.1.ttf') format('truetype'); /* 指向您的字體檔案 */
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* --- 以下為原有的其他 CSS (已整合) --- */
+@font-face {
+    font-family: 'CoriandrumCustom';
+    src: url('fonts/BpmfIansui-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+#practice-page h1{
+    color:#Fa9782;
+    margin-bottom:15px;
+    font-weight:700;
+    font-size: 1.8em;
+}
+.subtitle{
+    font-size:1em;
+    color:#555;
+    margin-bottom:10px;
+    font-weight:normal
+}
+#input-mode-selector{
+    margin-bottom:15px;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap:10px
+}
+.mode-button {
+    font-size:15px;
+    padding:8px 15px;
+    border:1px solid #76d7c4;
+    background-color:#fff;
+    color:#76d7c4;
+    border-radius:6px;
+    cursor:pointer;
+    transition:background-color .3s ease,color .3s ease;
+    font-weight:600
+}
+.mode-button.active, .mode-button:hover {
+    background-color:#76d7c4;
+    color:#fff
+}
+#input-container {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-bottom:15px;
+    gap:10px;
+    width:95%;
+    max-width:400px;
+}
+#level-selection-container {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-bottom:15px;
+    gap:10px;
+    width:80%;
+    max-width: 500px;
+}
+
+#level-buttons-area {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 4px;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 80%;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+.level-select-btn {
+    padding: 4px 5px;
+    background-color: #82E0AA;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    width: auto;
+    min-width: 10px;
+    flex-shrink: 1;
+    flex-grow: 1;
+    white-space: nowrap;
+    transition: background-color .3s ease;
+}
+
+#text-input-area,
+#file-input-area{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px
+}
+#text-input{
+    font-size:16px;
+    padding:10px;
+    width:100%;
+    box-sizing: border-box;
+    text-align:center;
+    border:1px solid #ddd;
+    border-radius:6px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* 讓點選時的變化更平順 */
+
+    /* --- ✨ 顏色修改區 --- */
+    background-color: #FAF8F5;   /* 1. 修改：輸入框的背景色 (米白色) */
+    color: #5D4037;              /* 2. 修改：使用者輸入的文字顏色 (深棕色) */
+    border: 1px solid #D7CCC8;   /* 3. 修改：輸入框的邊框顏色 (淺棕色) */
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.05);
+}
+
+/* ✨ 4. 新增：修改提示文字的顏色 */
+#text-input::placeholder {
+    color: #A1887F; /* 提示文字使用中等棕色 */
+}
+
+/* ✨ 5. 新增：修改點選輸入框時的外觀 */
+#text-input:focus {
+    outline: none; /* 移除瀏覽器預設的藍色外框 */
+    border-color: #A1887F; /* 邊框變為較深的顏色 */
+    box-shadow: 0 0 0 3px rgba(161, 136, 127, 0.2); /* 加上柔和的發光效果 */
+}
+
+#file-input{display:none}
+.file-input-label{
+    font-size:16px;
+    padding:10px 15px;
+    background-color:#fff;
+    color:#76d7c4;
+    border:1px dashed #76d7c4;
+    border-radius:6px;
+    cursor:pointer;
+    transition:background-color .3s ease,color .3s ease;
+    width:100%;
+    box-sizing:border-box;
+    font-weight:600
+}
+.file-input-label:hover{background-color:#e0f7fa}
+#selected-file-name{
+    font-size:.9em;
+    color:#555;
+    margin-top:5px;
+    word-break:break-all;
+    font-weight:normal
+}
+#process-data-button{
+    font-size:17px;
+    padding:10px 20px;
+    background-color:#76d7c4;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    transition:background-color .3s ease;
+    width:100%;
+    box-sizing:border-box;
+    font-weight:600
+}
+#process-data-button:hover{background-color:#65bcaa}
+#character-selection-buttons-container{
+    width:95%;
+    max-width:600px;
+    margin-bottom:15px
+}
+#character-selection-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px
+}
+.char-select-button{
+    padding:8px 12px;
+    background-color:#ffdab9;
+    color:#333;
+    border:1px solid #ffcfaa;
+    border-radius:6px;
+    cursor:pointer;
+    transition:background-color .2s ease,color .2s ease,border-color .2s ease;
+    font-family:'CoriandrumCustom','芫荽體',sans-serif;
+    font-size:1.5em;
+    font-weight:normal;
+    line-height:1.3;
+    min-width:50px
+}
+.char-select-button:hover{background-color:#ffc8a2;border-color:#ffb77e}
+.char-select-button.active{
+    background-color:#ffc8a2;
+    color:#333;
+    border-color:#ffb77e;
+    box-shadow:0 0 0 2px #ffb77e inset
+}
+
+#practice-mode-selector {
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 95%;
+    max-width: 400px;
+}
+.practice-mode-button {
+    font-size: 15px;padding: 8px 15px;border: 1px solid #C78482;background-color: #fff;color: #Fa9782;border-radius: 6px;cursor: pointer;transition: background-color 0.3s ease, color 0.3s ease;font-weight: 600;
+}
+.practice-mode-button.active,
+.practice-mode-button:hover {
+    background-color: #Fa9782;color: white;
+}
+
+.display-area-container{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+    width:95%;
+    max-width: 580px;
+    margin-bottom:0px;
+}
+#animation-wrapper{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    width:100%;
+    max-width: 200px;
+}
+#quiz-area-wrapper{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    width:100%;
+    max-width: 350px;
+}
+
+.hanzi-box{
+    background-color:#fff;
+    border:1px solid #ddd;
+    border-radius:8px;
+    box-shadow:0 2px 6px rgba(0,0,0,.08);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    box-sizing: border-box;
+}
+#animation-display.hanzi-box{
+    width: 150px;
+    height: 150px;
+}
+#quiz-display.hanzi-box{
+    width: 280px;
+    height: 280px;
+    touch-action:none;
+    position: relative;
+    margin: 0 auto;
+}
+
+#replay-animation-button,
+#hint-next-stroke-button {
+    padding: 6px 10px;
+    font-size: 0.9em;
+    font-size:14px;background-color:#76d7c4;color:#fff;border:none;border-radius:4px;cursor:pointer;transition:background-color .3s ease;font-weight:600
+}
+#replay-animation-button:hover{background-color:#65bcaa}
+#replay-animation-button:disabled{background-color:#b0bec5;color:#78909c;cursor:not-allowed}
+
+#quiz-controls {
+    margin-top: 0px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#hint-next-stroke-button {
+    background-color: #ffdab9;color: #333;display: none;
+}
+#hint-next-stroke-button:hover {background-color: #ffdab9;}
+#hint-next-stroke-button:disabled { background-color: #E0E0E0; color: #A0A0A0; cursor: not-allowed; opacity: 0.7; }
+
+#practiced-characters-container{
+    margin-top:5px;padding:15px;width:95%;max-width:600px;background-color:#fdfdfd;border:1px solid #eee;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,.05)
+}
+#practiced-characters-container h2{
+    color:#00695c;font-size:1.3em;margin-top:0;margin-bottom:10px;font-weight:700
+}
+#practiced-characters-list{
+    display:flex;flex-wrap:wrap;gap:8px;justify-content:center;font-weight:normal;min-height:2em
+}
+.practiced-char-item{
+    background-color:#e0f2f1;color:#00796b;padding:5px 10px;border-radius:4px;font-size:1.1em
+}
+
+#congrats-overlay{
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: none;
+    z-index: 1000;
+    pointer-events: auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+#congrats-overlay .congrats-image {
+    max-width: 80%;
+    max-height: 60vh;
+    width: 300px;
+    margin-top: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+#congrats-overlay h2 {
+    color:#C78B8D;
+    font-size: 2.2em;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    margin: 0;
+    padding: 0 20px;
+}
+
+#music-controls {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#play-pause-music-button {
+    font-size: 14px;
+    padding: 8px 15px;
+    background-color: #76D7C4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+    font-weight: 600;
+    min-width: 120px;
+}
+#play-pause-music-button:hover {
+    background-color: #65BCAA;
+}
+#play-pause-music-button:disabled {
+    background-color: #B0BEC5;
+    color: #78909C;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+#reward-display-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 100px;
+    z-index: 20;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    pointer-events: auto;
+    display: none;
+}
+#reward-display-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+#star-count-display {
+    display: none;
+}
+
+#auth-ui {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+    padding: 5px;
+    border-radius: 8px;
+    max-width: 45%; 
+    box-sizing: border-box;
+}
+
+#auth-ui button {
+    font-size: 13px;
+    padding: 6px 10px;
+    margin: 0;
+    width: fit-content;
+    white-space: nowrap;
+    text-align: center;
+}
+
+#user-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9em;
+    color: #444;
+    margin: 0;
+    white-space: nowrap;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+#user-status img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 3px;
+    flex-shrink: 0;
+}
+
+@media (min-width: 601px) {
+    .display-area-container {
+    flex-direction: row;
+    align-items: flex-start;
+    max-width: 580px;
+    }
+    #animation-wrapper, #quiz-area-wrapper { width: auto; max-width: none; }
+    #animation-display.hanzi-box { width: 180px; height: 180px; }
+    #quiz-display.hanzi-box { width: 350px; height: 350px; }
+    #reward-display-container { width: 120px; }
+}
+
+@media (max-width: 600px) {
+    #practice-page {
+        padding: 50px 5px 10px 5px; 
+    }
+    #auth-ui {
+        top: 5px;
+        right: 5px;
+        max-width: auto;
+        width: fit-content;
+        align-items: flex-end;
+    }
+
+    #auth-ui button {
+        font-size: 12px;
+        padding: 5px 8px;
+    }
+
+    #user-status {
+        font-size: 0.8em;
+    }
+
+    #practice-page h1 {
+        margin-top: 0px;
+        padding-top: 10px;
+    }
+/* --- ✨ 新增：左右兩欄佈局的樣式 --- */
+    .progress-main-layout {
+        display: flex; /* 啟用 Flexbox 佈局 */
+        flex-direction: row; /* 設定主軸方向為水平（左右並排） */
+        align-items: flex-start; /* 讓左右欄頂部對齊 */
+        gap: 30px; /* 左右欄之間的間距 */
+        width: 100%;
+        max-width: 900px; /* 設定整個佈局的最大寬度 */
+        margin-bottom: 30px;
+    }
+
+    .progress-left-column {
+        flex: 1; /* 讓左欄自動分配可用空間 */
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .progress-right-column {
+        flex: 1; /* 讓右欄自動分配可用空間 */
+        display: flex;
+        align-items: flex-start; /* 讓內容從頂部開始 */
+    }
+
+    /* 針對手機等小螢幕的優化 */
+    @media (max-width: 768px) {
+        .progress-main-layout {
+        flex-direction: column; /* 在小螢幕上，改回垂直堆疊，避免擠壓 */
+        }
+    }    
+}
+    /* --- 新增：三層關卡選擇介面樣式 --- */
+    .level-tier-container {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .level-selection-column {
+        flex: 1;
+        background-color: #f9f9f9;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        padding: 15px;
+        min-width: 150px;
+    }
+
+    .level-selection-title {
+        margin: 0 0 10px 0;
+        padding-bottom: 8px;
+        border-bottom: 2px solid #76d7c4;
+        color: #00695c;
+        font-size: 1.1em;
+    }
+
+    .level-buttons-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .tier-button {
+        width: 100%;
+        padding: 10px;
+        font-size: 1em;
+        font-weight: 600;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #fff;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .tier-button:hover {
+        background-color: #e0e0e0;
+    }
+
+    .tier-button.active {
+        background-color: #76d7c4;
+        color: white;
+        border-color: #76d7c4;
+    }
+
+    #reset-level-selection-button {
+        font-size: 14px;
+        padding: 8px 15px;
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    /* 小螢幕上改為垂直排列 */
+    @media (max-width: 600px) {
+        .level-tier-container {
+        flex-direction: column;
+        }
+    }    
+    /* --- ✨ 2. 新增：外部連結頁面樣式 --- */
+    #links-page {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh; /* 不需要佔滿全螢幕，感覺更像頁尾 */
+        padding: 60px 20px;
+        box-sizing: border-box;
+        background-color: #ab9187; 
+        color: #CFD8DC;
+    }
+
+    #links-page h2 {
+        font-size: 2em;
+        color: white;
+        margin-bottom: 5px;
+    }
+
+    .links-page-content {
+        width: 100%;
+        max-width: 900px;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    #links-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 響應式網格佈局 */
+        gap: 20px; /* 卡片間距 */
+        margin-top: 30px;
+        text-align: left;
+    }
+
+    .link-card {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background-color: #89746c;
+        padding: 20px;
+        border-radius: 8px;
+        color: #ECEFF1;
+        text-decoration: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .link-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .link-card-icon {
+        font-size: 2em;
+        flex-shrink: 0;
+    }
+
+    .link-card-text h4 {
+        margin: 0 0 5px 0;
+        color: white;
+        font-size: 1.1em;
+    }
+
+    .link-card-text p {
+        margin: 0;
+        font-size: 0.9em;
+        font-weight: normal;
+        opacity: 0.8;
+    }
+    /* --- ✨ 2. 新增：頁尾社群連結樣式 --- */
+    #social-links-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 25px; /* 圖示之間的間距 */
+        margin-top: 30px; /* 與上方按鈕的間距 */
+    }
+
+    .social-link {
+        display: inline-block;
+        transition: transform 0.2s ease;
+    }
+
+    .social-link:hover {
+        transform: scale(1.15); /* 滑鼠移上去時稍微放大 */
+    }
+
+    .social-link img {
+        width: 40px; /* 設定圖示的寬度 */
+        height: 40px; /* 設定圖示的高度 */
+    }
+    /* --- ✨ 新增：用於強制換行的網格樣式 --- */
+    .grid-row-break {
+        grid-column: 1 / -1; /* 關鍵！讓這個元素佔滿一整排的寬度 */
+        height: 0; /* 它本身不需要高度 */
+        margin: 0;
+        padding: 0;
+    }
